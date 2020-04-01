@@ -1,8 +1,10 @@
 # Map Background Scale
 
-Our boss got a link form a spanish news paper about choronavirus stats, he got
-astonished by the charts that we represented (https://elpais.com/sociedad/2020/03/03/actualidad/1583227754_157787.html), now we have to implement a chart that
-colours each european country depending on heavhy they have been affected by Choronavirus.
+Our boss got a link form a spanish news paper about choronavirus stats, he got astonished by the charts that we represented (https://elpais.com/sociencia/2020/03/03/actualidad/1583227754_157787.html), now we have to implement two chart that colors each Spain communities depending on heavy they have been affected by Choronavirus in two diferent case. Each chart have two indicator gravity:
+
+- Represent the infected numbers with a circular marks in each commuty.
+
+-  Represent the background colour map with a different scale of colour with a ratio of infected for each commuty.
 
 ![Europe Chart Corona Virus](./content/chart.png)
 

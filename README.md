@@ -327,6 +327,9 @@ export const latLongCommunities = [
 _./src/spain.ts_
 
 - Now you can start to write the principal script (index.ts). On the first time, have to do all import the dependencies on your principal script.
+
+_./src/index.ts_
+
 ```typescript
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
@@ -368,59 +371,70 @@ const calculateRadiusBasedOnAffectedCases = (comunidad: string, currentStats: an
 };
 ```
 
-- If we check the values the start from 0 to 5000 approx, let's assign a range of colores for that
+- If we check the values the start from 10 to 10000 approx, let's assign a range of colores for that
   domain:
-
-_./src/index.ts_
-
-```diff
-import { coronaVirusAffectedByCountry } from "./stats";
-
-+ // set the affected color scale
-+ var color = d3
-+  .scaleThreshold<number, string>()
-+  .domain([0, 1, 100, 500, 700, 1000])
-+  .range([
-+    "#FFFFF",
-+    "#FFE8E5",
-+    "#F88F70",
-+    "#CD6A4E",
-+    "#A4472D",
-+    "#7B240E",
-+    "#540000"
-+  ]);
+  
+```typescript
+ var color = d3
+ .scaleThreshold<number, string>()
+ .domain([10,50,70,100,500,1700,2000,2100,5000,10000])
+ .range([
+  "#fffaf6",  
+  "#fff1e2",
+  "#ffe7ce",
+  "#ffddbb",
+  "#ffd3a7",
+  "#ffc994",
+  "#ffc080",
+  "#ffb66c",
+  "#ffac59",
+  "#ffa245",
+  "#ff9832",
+  "#ff8e1e",
+  "#ff850a",   
+ ]);
 ```
+ 
 
-- Let's create a help function to map from country to color: we have to take into account
-  that some European countries are not affected (won't exists on our list).
+- Let's create a help function to map from community to color: we have to take into account that some communities  are not affected (won't exists on our list).
 
-```diff
-var color = d3
-  .scaleThreshold<number, string>()
-  .domain([0, 1, 100, 500, 700, 1000])
-  .range([
-    "#FFFFF",
-    "#FFE8E5",
-    "#F88F70",
-    "#CD6A4E",
-    "#A4472D",
-    "#7B240E",
-    "#540000"
-  ]);
+```typescript
 
-+ const assignCountryBackgroundColor = (countryName: string) => {
-+  const item = coronaVirusAffectedByCountry.find(
-+    item => item.country === countryName
-+  );
-+
-+  if (item) {
-+    console.log(item.affected);
-+  }
-+
-+  return item ? color(item.affected) : color(0);
-+ };
+const assignRegionBackgroundColor = (RegionName: string, currentStats: any[]) => {
+  const item = currentStats.find(
+    item => item.name === RegionName
+
+  return item ? color(item.value) : color(0);
+};
 ```
+- Difined background painted zone to build the map.
+```typescript
+const svg = d3
+  .select("body")
+  .append("svg")
+  .attr("width", 1024)
+  .attr("height", 800)
+  .attr("style", "background-color: #FBFAF0");
+ ```
+ - Let's change the projection we are using and adjusted  well the scale, put the map on the center of the page and translate values:
+ 
+ ```typescript
+ const aProjection = d3Composite
+  .geoConicConformalSpain()
+  // Let's make the map bigger to fit in our resolution
+  .scale(3300)
+  // Let's center the map
+  .translate([500, 400]);
+  
+ const geoPath = d3.geoPath().projection(aProjection);
 
+
+const geojson = topojson.feature(
+  spainjson,
+  spainjson.objects.ESP_adm1
+);
+ ```
+  
 - Now it's time to remove features that we need on the map render (mouse out, mouseover):
 
 ```diff

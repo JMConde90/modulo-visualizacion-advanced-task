@@ -230,7 +230,7 @@ export const stats22Marzo = [
 
 - Searched the communities location and define an array with the name, latitude and longitude for each community.
 
-_./src/stats.ts_
+_./src/communities.ts_
 
 ```typescript
 export const latLongCommunities = [
@@ -322,9 +322,22 @@ export const latLongCommunities = [
 ];
 ```
 
-- Le't import the new set of data into our _index.ts_ file:
+- Let's import on the project the spain set on type json.
 
-_./src/index.ts_
+_./src/spain.ts_
+
+- Now you can start to write the principal script (index.ts). On the first time, have to do all import the dependencies on your principal script.
+```typescript
+import * as d3 from "d3";
+import * as topojson from "topojson-client";
+const d3Composite = require("d3-composite-projections");
+const europejson = require("./europe.json");
+const spainjson = require("./spain.json")
+import {statsBase} from "./stats"
+import {stats22Marzo} from "./stats"
+import {latLongCommunities} from"./communities"
+```
+
 
 ```diff
 const europejson = require("./europe.json");

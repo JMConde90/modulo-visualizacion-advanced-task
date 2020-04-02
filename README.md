@@ -337,11 +337,35 @@ import {statsBase} from "./stats"
 import {stats22Marzo} from "./stats"
 import {latLongCommunities} from"./communities"
 ```
+- Calculate the max number of infected on the communities for the base use case (Initialize calculus for first time).
+```typescript
+let maxAffected =   statsBase.reduce(
+  (max,item) => (item.value > max ? item.value : max),0
+);
+```
 
+- Now define the radius scales for represents the interval of infected for each community.
+```typescript
+const affectedRadiusBasedScale = d3
+  .scaleQuantile()
+  .domain([0, maxAffected])
+  .range([5,10,15,25,30,35,40]);
+ ```
 
-```diff
-const europejson = require("./europe.json");
-+ import { coronaVirusAffectedByCountry } from "./stats";
+- Let's now move on the calculate radius operations for each communities and use case.
+```typescript
+const calculateRadiusBasedOnAffectedCases = (comunidad: string, currentStats: any[]) => {
+  let size = 0;
+  const entry = currentStats.find(item => item.name === comunidad); 
+  
+  console.log(maxAffected)
+        if(entry) {
+            size = affectedRadiusBasedScale(entry.value);
+                                      
+        }
+                                                                        
+  return size;
+};
 ```
 
 - If we check the values the start from 0 to 5000 approx, let's assign a range of colores for that

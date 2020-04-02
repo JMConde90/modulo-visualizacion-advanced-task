@@ -74,41 +74,251 @@ Base use case (March 07)
 | Región de Murcia           |    296    |
 | Extremadura                |    384    |
 
-- Let's port it to json (respecting the name of the countries that we are using
-  in our europe map)
+
+- Let's define two arrays for each  infected use case table.
 
 _./src/stats.ts_
 
 ```typescript
-export const coronaVirusAffectedByCountry = [
-  { country: "Italy", affected: 4636 },
-  { country: "Germany", affected: 687 },
-  { country: "France", affected: 613 },
-  { country: "Spain", affected: 443 },
-  { country: "Switzerland", affected: 210 },
-  { country: "England", affected: 163 },
-  { country: "Sweden", affected: 137 },
-  { country: "Netherdlands", affected: 128 },
-  { country: "Norway", affected: 113 },
-  { country: "Austria", affected: 55 },
-  { country: "Greece", affected: 46 },
-  { country: "Iceland", affected: 45 },
-  { country: "San Marino", affected: 23 },
-  { country: "Denmark", affected: 23 },
-  { country: "Ireland", affected: 18 },
-  { country: "Czech Republic", affected: 18 },
-  { country: "Finland", affected: 15 },
-  { country: "Croatia", affected: 11 },
-  { country: "Estonia", affected: 10 },
-  { country: "Portugal", affected: 8 },
-  { country: "Russia", affected: 8 },
-  { country: "Romania", affected: 6 },
-  { country: "Poland", affected: 5 },
-  { country: "Luxembourg", affected: 3 },
-  { country: "Hungary", affected: 3 },
-  { country: "Macedonia", affected: 1 },
-  { country: "Lithuania", affected: 1 },
-  { country: "Monaco", affected: 1 }
+export const statsBase = [
+  {
+    name: "Comunidad de Madrid",
+    value: 587
+  },
+  {
+    name: "País Vasco",
+    value: 148
+  },
+  
+  {
+    name: "La Rioja",
+    value: 102
+  },
+  {
+    name: "Cataluña",
+    value: 101
+  },
+  {
+    name: "Andalucía",
+    value: 54
+  },
+  
+  {
+    name: "Comunidad Valenciana",
+    value: 50
+  },
+  {
+    name: "Castilla y León",
+    value: 40
+  },
+  {
+    name: "Aragón",
+    value: 32
+  },
+  {
+    name: "Castilla-La Mancha",
+    value: 26
+  },
+  {
+    name: "Islas Canarias",
+    value: 24
+  },
+  {
+    name: "Galicia",
+    value: 18
+  },
+  {
+    name: "Comunidad Foral de Navarra",
+    value: 13
+  },
+  {
+    name: "Cantabria",
+    value: 12
+  },
+  {
+    name: "Islas Baleares",
+    value: 11
+  },
+  {
+    name: "Principado de Asturias",
+    value: 10
+  },
+  {
+    name: "Región de Murcia",
+    value: 5
+  },
+
+  {
+    name: "Extremadura",
+    value: 7
+  }
+  
+];
+
+export const stats22Marzo = [
+  {
+    name: "Comunidad de Madrid",
+    value: 9702
+  },
+  {
+    name: "Cataluña",
+    value: 4704
+  },
+  {
+    name: "País Vasco",
+    value: 2097
+  },
+  {
+    name: "Castilla-La Mancha",
+    value: 1819
+  },
+  {
+    name: "Castilla y León",
+    value: 1744
+  },
+  {
+    name: "Andalucía",
+    value: 1725
+  },
+  {
+    name: "Comunidad Valenciana",
+    value: 1604
+  },
+  {
+    name: "Galicia",
+    value: 915
+  },
+  {
+    name: "Comunidad Foral de Navarra",
+    value: 794
+  },
+  {
+    name: "La Rioja",
+    value: 654
+  },
+  {
+    name: "Principado de Asturias",
+    value: 545
+  },
+  {
+    name: "Aragón",
+    value: 532
+  },
+  {
+    name: "Islas Canarias",
+    value: 414
+  },
+  {
+    name: "Extremadura",
+    value: 384
+  },
+  {
+    name: "Islas Baleares",
+    value: 331
+  },
+  {
+    name: "Región de Murcia",
+    value: 296
+  },
+  {
+    name: "Cantabria",
+    value: 282
+  }
+];
+
+```
+
+- Searched the communities location and define an array with the name, latitude and longitude for each community.
+
+_./src/stats.ts_
+
+```typescript
+export const latLongCommunities = [
+  {
+    name: "Comunidad de Madrid",
+    long: -3.70256,
+    lat: 40.4165
+  },
+  {
+    name: "Andalucía",
+    long: -4.5,
+    lat: 37.6
+  },
+  {
+    name: "Comunidad Valenciana",
+    long: -0.37739,
+    lat: 39.45975
+  },
+  {
+    name: "Región de Murcia",
+    long: -1.13004,
+    lat: 37.98704
+  },
+  {
+    name: "Extremadura",
+    long: -6.16667,
+    lat: 39.16667
+  },
+  {
+    name: "Cataluña",
+    long: 1.86768,
+    lat: 41.82046
+  },
+  {
+    name: "País Vasco",
+    long: -2.75,
+    lat: 43.0
+  },
+  {
+    name: "Cantabria",
+    long: -4.03333,
+    lat: 43.2
+  },
+  {
+    name: "Asturias",
+    long: -5.86112,
+    lat: 43.36662
+  },
+  {
+    name: "Galicia",
+    long: -7.86621,
+    lat: 42.75508
+  },
+  {
+    name: "Aragón",
+    long: -1.0,
+    lat: 41.0
+  },
+  {
+    name: "Castilla y León",
+    long: -4.45,
+    lat: 41.383333
+  },
+  {
+    name: "Castilla-La Mancha",
+    long: -3.000033,
+    lat: 39.500011
+  },
+  {
+    name: "Islas Canarias",
+    long: -15.5,
+    lat: 28.0
+  },
+  {
+    name: "Islas Baleares",
+    long: 2.52136,
+    lat: 39.18969
+  },
+  {
+    name: "La Rioja",
+    long: -2.44373,
+    lat: 42.4650
+  },
+  {
+    name: "Comunidad Foral de Navarra",
+    long: -1.676069,
+    lat: 42.695391
+  }
 ];
 ```
 

@@ -434,74 +434,114 @@ const geojson = topojson.feature(
   spainjson.objects.ESP_adm1
 );
  ```
+- It is added a code to render a background colours on the map for each community in function of the number of infected:
+```typescript
+svg
+  .selectAll("path")
+  .data(geojson["features"])
+  .enter()
+  .append("path")
+  .attr("class", "country") //defino los bordes de las comunidades
+  .style("fill", function(d: any) {
+   // console.log(d.properties.geounit);
+    return assignRegionBackgroundColor(d.properties.NAME_1, statsBase);
+  })
+  // data loaded from json file
+  .attr("d", geoPath as any);
+  ```
+-  It is added a code to render a circle on top of each community:
+
+  ```typescript
+  svg
+  .selectAll("circle")
+  .data(latLongCommunities)
+  .enter()
+  .append("circle")
+  //fractionated the opacity of the circles 
+  .attr("class", "affected-marker") 
+  .attr("r", d => calculateRadiusBasedOnAffectedCases(d.name,statsBase))
+  .attr("cx", d => aProjection([d.long, d.lat])[0])
+  .attr("cy", d => aProjection([d.long, d.lat])[1])
   
-- Now it's time to remove features that we need on the map render (mouse out, mouseover):
+  ```
+- It is added a code to update  the circles on top of each community:
+```typescript
+  const updateCircles = (data: any[]) => {
+    const circles = svg.selectAll("circle");
+    circles
+      .data(latLongCommunities)
+      .merge(circles as any)
+      .transition()
+      .duration(500)
+      .attr("r", d => calculateRadiusBasedOnAffectedCases(d.name, data));
+  };
+  ```
+  
+- Update the color of the communities based on those affected.
 
-```diff
-svg
-  .selectAll("path")
-  .data(geojson["features"])
-  .enter()
-  .append("path")
-  .attr("class", "country")
-  // data loaded from json file
-  .attr("d", geoPath as any)
--  .on("mouseover", function(d, i) {
--    d3.select(this).attr("class", "selected-country");
--  })
--  .on("mouseout", function(d, i) {
--    d3.select(this).attr("class", "country");
--  });
-```
-
-- And add a fill style to match country name with corresponding background color (based on
-  coronavirus affected people):
-
-```diff
-svg
-  .selectAll("path")
-  .data(geojson["features"])
-  .enter()
-  .append("path")
-  .attr("class", "country")
-+  .style("fill", function(d: any) {
-+    return assignCountryBackgroundColor(d.properties.geounit);
-+  })
-
-  // data loaded from json file
-  .attr("d", geoPath as any)
-```
-
-- To complete our styling journey, let's modify our country css class to provide a default
-  background color to our countrie.
-
-```diff
-.country {
-  stroke-width: 1;
-  stroke: #2f4858;
--  fill: #008c86;
-+  fill: #FFFFFF;
-}
-
-- .selected-country {
--  stroke-width: 1;
--  stroke: #bc5b40;
--  fill: #f88f70;
+```typescript
+  const updateBackgroundCircles = (data: any[])=>{
+    const pathCollection = svg.selectAll('path');
+    pathCollection.data(geojson["features"])
+                  .enter()
+                  .merge(pathCollection as any)
+                  .style("fill", function(d: any) {
+                    console.log(d);
+                    return assignRegionBackgroundColor(d.properties.NAME_1, data);
+                  })
+                  .attr("d", geoPath as any)
+  }
+   // Actualizo el valor e la variable maxAffected                          
+ const calculateMaxAffected = (currentStats: any[]) =>{
+  maxAffected = currentStats.reduce(
+    (max,item) => (item.value > max ? item.value : max),0
+  )
 }
 ```
-
-- Let's give a try
-
-```bash
-npm start
+- Update the value of the maxAffected variable
+```typescript
+ const calculateMaxAffected = (currentStats: any[]) =>{
+  maxAffected = currentStats.reduce(
+    (max,item) => (item.value > max ? item.value : max),0
+  )
+}
 ```
+- Let's to include the transaction the use case statsBase to stats22Marzo when have mouse click in to the bottons.
+```typescript
+document
+  .getElementById("base")
+  .addEventListener("click", function handleResultsBase() {
+    updateBackgroundCircles(statsBase)
+    calculateMaxAffected(statsBase);
+    updateCircles (statsBase );
+  });
 
-# About Basefactor + Lemoncode
+  document
+  .getElementById("22marzo")
+  .addEventListener("click", function handleResults22Marzo() {
+    updateCircles (stats22Marzo);
+    calculateMaxAffected(stats22Marzo);
+    updateBackgroundCircles(stats22Marzo)
+  });
+  ```
+  
 
-We are an innovating team of Javascript experts, passionate about turning your ideas into robust products.
 
-[Basefactor, consultancy by Lemoncode](http://www.basefactor.com) provides consultancy and coaching services.
+- Add two buttons to change the visualization in to the differents use case. 
+_./src/index.html._
 
-[Lemoncode](http://lemoncode.net/services/en/#en-home) provides training services.
+```typescript
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="./map.css" />
+    <link rel="stylesheet" type="text/css" href="./base.css" />
+  </head>
+  <body>
+    <div>
+      <button id= "base">Caso base</button>
+      <button id= "22marzo">Case 22 Marzo</button>
+    </div>
+    <script src="./index.ts"></script>
+  </body>
+</html>
 
-For the LATAM/Spanish audience we are running an Online Front End Master degree, more info: http://lemoncode.net/master-frontend

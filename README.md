@@ -17,46 +17,41 @@ Our boss got a link form a spanish news paper about choronavirus stats, he got a
 ```bash
 npm intall
 npm install topojson-client --save
+npm install @types/topojson-client --save-dev
+npm install topojson --save
+npm install @types/topojson --save-dev
+npm install d3-composite-projections --save
+npm install @types/node --save-dev
 ```
-
+- When you have install all the dependencies, let's start the localhost server.
 ```bash
 npm start
 ```
 
-We have the following information (07 March)
+We have the following information:
 
-| Country         | Infected |
-| --------------- | :------: |
-| Italy           |   4636   |
-| Germany         |   687    |
-| France          |   613    |
-| Spain           |   443    |
-| Switzerland     |   210    |
-| England         |   163    |
-| Sweden          |   137    |
-| Netherdlands    |   128    |
-| Norway          |   113    |
-| Belgium         |   109    |
-| Austria         |    55    |
-| Greek           |    46    |
-| Island          |    45    |
-| San Marino      |    23    |
-| Denmark         |    23    |
-| Irlanda         |    18    |
-| Chzech Republic |    18    |
-| Finlandia       |    15    |
-| Croacia         |    11    |
-| Estonia         |    10    |
-| Portugal        |    8     |
-| Rusia           |    8     |
-| Eslovenia       |    6     |
-| Rumania         |    6     |
-| Polonia         |    5     |
-| Luxemburgo      |    3     |
-| Hungría         |    3     |
-| Macedony        |    1     |
-| Lituania        |    1     |
-| Mónaco          |    1     |
+Base use case (March 07)
+
+| Country                    | Infected |
+| -------------------------- | :------: |
+| Comunidad de Madrid        |   587    |
+| Páis Vasco                 |   148    |
+| La Rioja                   |   102    |
+| Cataluña                   |   101    |
+| Andalucía                  |    54    |
+| Comunidad Valenciana       |    50    |
+| Castilla y León            |    40    |
+| Aragón                     |    32    |
+| Castilla-La Mancha         |    26    |
+| Islas Canarias             |    24    |
+| Galicia                    |    18    |
+| Comunidad Foral de Navarra |    13    |
+| Cantabria                  |    12    |
+| Islas Baleares             |    11    |
+| Principado de Asturias     |    10    |
+| Región de Murcia           |     5    |
+| Extremadura                |     7    |
+
 
 - Let's port it to json (respecting the name of the countries that we are using
   in our europe map)

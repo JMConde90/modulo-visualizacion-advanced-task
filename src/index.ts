@@ -37,7 +37,7 @@ const calculateRadiusBasedOnAffectedCases = (comunidad: string, currentStats: an
   return size;
 };
 // Esacala de colores para el numero de afectados por comunidad 
-
+/*
 var color = d3
   .scaleThreshold<number, string>()
   .domain([10,50,70,100,500,1700,2000,2100,5000,10000])
@@ -46,7 +46,7 @@ var color = d3
     "#ff8e1e",
     "#ff9832",
     "#ffa245",
-    "##ffac59",
+    "#ffac59",
     "#ffb66c",
     "#ffc080",
     "#ffc994",
@@ -57,8 +57,8 @@ var color = d3
     "#fffaf6"    
   ]);
 
-  
-/*
+*/
+
  var color = d3
  .scaleThreshold<number, string>()
  .domain([10,50,70,100,500,1700,2000,2100,5000,10000])
@@ -71,13 +71,12 @@ var color = d3
   "#ffc994",
   "#ffc080",
   "#ffb66c",
-  "##ffac59",
+  "#ffac59",
   "#ffa245",
   "#ff9832",
   "#ff8e1e",
   "#ff850a",   
  ]);
- */
   console.log(color)
 
 //funcion para asignar colores a las comunidades

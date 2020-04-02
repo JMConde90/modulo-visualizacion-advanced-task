@@ -32,7 +32,7 @@ We have the following information:
 
 Base use case (March 07)
 
-| Country                    | Infected |
+| Community                  | Infected |
 | -------------------------- | :------: |
 | Comunidad de Madrid        |   587    |
 | Páis Vasco                 |   148    |
@@ -52,6 +52,27 @@ Base use case (March 07)
 | Región de Murcia           |     5    |
 | Extremadura                |     7    |
 
+22Marzo use case (March 07)
+
+| Community                  | Infected  |
+| -------------------------- | :------:  |
+| Comunidad de Madrid        |   9702    |
+| Páis Vasco                 |   2097    |
+| La Rioja                   |    654    |
+| Cataluña                   |   4704    |
+| Andalucía                  |   1725    |
+| Comunidad Valenciana       |   1604    |
+| Castilla y León            |   1744    |
+| Aragón                     |    532    |
+| Castilla-La Mancha         |   1819    |
+| Islas Canarias             |    414    |
+| Galicia                    |    915    |
+| Comunidad Foral de Navarra |    794    |
+| Cantabria                  |    282    |
+| Islas Baleares             |    331    |
+| Principado de Asturias     |    545    |
+| Región de Murcia           |    296    |
+| Extremadura                |    384    |
 
 - Let's port it to json (respecting the name of the countries that we are using
   in our europe map)

@@ -6,14 +6,18 @@ Our boss got a link form a spanish news paper about choronavirus stats, he got a
 
 -  Represent the background colour map with a different scale of colour with a ratio of infected for each commuty.
 
-![Europe Chart Corona Virus](./content/chart.png)
+![Europe Chart Corona Virus](./content/chart1.png)
+![Europe Chart Corona Virus](./content/chart2.png)
 
-Codesandbox: https://codesandbox.io/s/aged-sunset-y8n63
+
 
 # Steps
 
-- We will take as starting point our previous example: _00-render-map-hover_ let's copy
-  the content and execute _npm start_
+- On the first time that you start the project, you will install the necessary dependencies.
+```bash
+npm intall
+npm install topojson-client --save
+```
 
 ```bash
 npm start
